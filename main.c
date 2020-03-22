@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include "loop.h"
 
-int loop_variable_value(char x){
+
+/*int loop_variable_value(char x){
     
     return x;
 }
 
-int loop_continue(char x){
+void loop_continue(char x){
     
     int place,t,k;
     
@@ -17,50 +17,39 @@ int loop_continue(char x){
     if (d[place] > end[place]) d[place] = start[place];
     for (t=0 ; t < place ; t++) d[t] = start[t];
 }
+ */
 int main(){
     
-    int b,start[255],end[255],step[255],i = 0,y=1,m,k=1,total_count=1,loop_count[255],size_count,t;
-    char d[255];
+    int b,start[255],end[255],step[255],i = 0,m,k=1;
+    char normal[255],value[255];
     
    do {
         
-        d[i] = getchar();
+        normal[i] = getchar();
         
         scanf("%d %d %d",&start[i],&end[i],&step[i]);
         
         if ((start[i] > end[i] && step[i] > 0) || (start[i] < end[i] && step[i] < 0)) goto stop;
         
         else {
-            size_count=0;
-            for(m = start[i] ; m <= end[i] ; m += step[i] ) size_count += 1;
-            total_count *= size_count;
-            loop_count[i] = total_count;
-            
+            normal[i] = value[i];
+            value[i] = start[i];
         }
         i++;
         
     }
     while(b = getchar() != EOF);
     
-    for (t=0 ; t < i ; t++) d[i]=start[i];
-    
-    while(y <= total_count){
+    while(value[0] < end[0]){
         
-        d[0] += step[0];
-        
-        if (d[0] > end[0]) d[0]=start[0];
-        
-        while (k < i){
-        
-            if (y == loop_count[k-1]){
-                d[k] += step[k];
-                if (d[k] > end[k]) d[k] = start[k];
+        printf("%c : %d %c : %d %c : %d\n",normal[0],value[0],normal[1],value[1],normal[2],value[2]);
+        value[i-1] += step[i-1];
+        for (m=i-1;m > 0;m--){
+            if (value[m] > end[m]){
+                value[m-1] += step[m-1];
+                value[m] = start[m];
             }
-            k++;
         }
-        loop_execute();
-        y++;
     }
-    
 stop: return 0;
 }
